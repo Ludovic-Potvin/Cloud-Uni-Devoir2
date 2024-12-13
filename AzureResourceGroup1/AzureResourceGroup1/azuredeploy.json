@@ -187,7 +187,16 @@
               "type": "Microsoft.Storage/storageAccounts/blobServices/containers",
               "apiVersion": "2022-09-01",
               "name": "[format('{0}/default/{1}', parameters('storageAccountName'), parameters('containerName'))]",
-              "properties": {}
+              "properties": {
+                "deleteRetentionPolicy": {
+                  "enabled": "[parameters('isBlobSoftDeleteEnabled')]",
+                  "days": "[parameters('blobSoftDeleteRetentionDays')]"
+                },
+                "containerDeleteRetentionPolicy": {
+                  "enabled": "[parameters('isContainerSoftDeleteEnabled')]",
+                  "days": "[parameters('containerSoftDeleteRetentionDays')]"
+                }
+              }
             }
           ]
         }
