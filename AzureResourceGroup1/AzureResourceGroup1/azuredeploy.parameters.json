@@ -15,7 +15,7 @@
       "value": "FtpsOnly"
     },
     "storageAccountName": {
-      "value": "devoir2a229"
+      "value": "devoir2storageaccount"
     },
     "sku": {
       "value": "Dynamic"
