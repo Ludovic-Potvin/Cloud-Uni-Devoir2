@@ -11,18 +11,21 @@ pool: "Azure Pipelines"
 variables:
 - name: CloudInitContent
 
-steps:
+jobs:
+- job: Deploy main
+  steps:
 
-- task: AzureResourceManagerTemplateDeployment@3
-  inputs:
-    deploymentScope: 'Resource Group'
-    azureResourceManagerConnection: 'Azure subscription 1(f8ee07ed-b563-4b27-931f-56bdf1405242)'
-    subscriptionId: 'f8ee07ed-b563-4b27-931f-56bdf1405242'
-    action: 'Create Or Update Resource Group'
-    resourceGroupName: 'Devoir2'
-    location: 'East US'
-    templateLocation: 'Linked artifact'
-    csmFile: '$(Build.SourcesDirectory)/AzureResourceGroup1/AzureResourceGroup1/azuredeploy.json'
-    csmParametersFile: '$(Build.SourcesDirectory)/AzureResourceGroup1/AzureResourceGroup1/azuredeploy.parameters.json'
-    overrideParameters: ''
-    deploymentMode: 'Incremental'
+  - task: AzureResourceManagerTemplateDeployment@3
+    displayName: 'Deploy Azure ressources'
+    inputs:
+      deploymentScope: 'Resource Group'
+      azureResourceManagerConnection: 'Azure subscription 1(f8ee07ed-b563-4b27-931f-56bdf1405242)'
+      subscriptionId: 'f8ee07ed-b563-4b27-931f-56bdf1405242'
+      action: 'Create Or Update Resource Group'
+      resourceGroupName: 'Devoir2'
+      location: 'East US'
+      templateLocation: 'Linked artifact'
+      csmFile: '$(Build.SourcesDirectory)/AzureResourceGroup1/AzureResourceGroup1/azuredeploy.json'
+      csmParametersFile: '$(Build.SourcesDirectory)/AzureResourceGroup1/AzureResourceGroup1/azuredeploy.parameters.json'
+      overrideParameters: ''
+      deploymentMode: 'Incremental'
