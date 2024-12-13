@@ -4,7 +4,7 @@
 # https://aka.ms/yaml
 
 trigger:
-- master
+- main
 
 pool: "Azure Pipelines"
 
@@ -31,7 +31,7 @@ steps:
     azureResourceManagerConnection: 'Azure subscription 1(f8ee07ed-b563-4b27-931f-56bdf1405242)'
     subscriptionId: 'f8ee07ed-b563-4b27-931f-56bdf1405242'
     action: 'Create Or Update Resource Group'
-    resourceGroupName: 'Devoir1'
+    resourceGroupName: 'Devoir2'
     location: 'East US'
     templateLocation: 'Linked artifact'
     csmFile: '$(Build.SourcesDirectory)/AzureResourceGroup1/azuredeploy.json'
