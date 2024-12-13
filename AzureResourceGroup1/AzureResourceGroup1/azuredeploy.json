@@ -190,14 +190,6 @@
               "properties": {}
             }
           ]
-        },
-        "parameters": {
-          "storageAccountName": {
-            "value": "[parameters('storageAccountName')]"
-          },
-          "containerName": {
-            "value": "[parameters('containerName')]"
-          }
         }
       }
     }
