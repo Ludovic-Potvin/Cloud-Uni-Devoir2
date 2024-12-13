@@ -56,6 +56,18 @@
       ]
     },
     {
+      "apiVersion": "2021-04-01",
+      "type": "Microsoft.Web/serverfarms",
+      "name": "functionAppPlan",
+      "location": "[parameters('location')]",
+      "properties": {
+        "sku": {
+          "tier": "Dynamic",
+          "name": "Y1"
+        }
+      }
+    },
+    {
       "apiVersion": "2021-02-01",
       "type": "Microsoft.Web/sites",
       "name": "[parameters('functionAppName')]",
