@@ -2,89 +2,59 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
+    "subscriptionId": {
+      "value": "f8ee07ed-b563-4b27-931f-56bdf1405242"
+    },
+    "name": {
+      "value": "addtoazurebusfunction"
+    },
     "location": {
-      "value": "eastus"
+      "value": "Canada Central"
+    },
+    "ftpsState": {
+      "value": "FtpsOnly"
     },
     "storageAccountName": {
-      "value": "devoir2storageaccount1"
+      "value": "devoir2a229"
     },
-    "containerName": {
-      "value": "devoir2container"
+    "sku": {
+      "value": "Dynamic"
     },
-    "accountType": {
-      "value": "Standard_LRS"
+    "skuCode": {
+      "value": "Y1"
     },
-    "kind": {
-      "value": "StorageV2"
+    "workerSize": {
+      "value": "0"
     },
-    "minimumTlsVersion": {
-      "value": "TLS1_2"
+    "workerSizeId": {
+      "value": "0"
     },
-    "supportsHttpsTrafficOnly": {
-      "value": true
+    "numberOfWorkers": {
+      "value": "1"
     },
-    "allowBlobPublicAccess": {
+    "use32BitWorkerProcess": {
       "value": false
     },
-    "allowSharedKeyAccess": {
-      "value": true
+    "netFrameworkVersion": {
+      "value": "v8.0"
     },
-    "defaultOAuth": {
+    "repoUrl": {
+      "value": "https://github.com/Ludovic-Potvin/Cloud-Uni-Devoir2"
+    },
+    "branch": {
+      "value": "main"
+    },
+    "oidcUserIdentityName": {
+      "value": "addtoazurebusfun-id-87b0"
+    },
+    "hostingPlanName": {
+      "value": "ASP-Devoir2-9160"
+    },
+    "serverFarmResourceGroup": {
+      "value": "Devoir2"
+    },
+    "alwaysOn": {
       "value": false
-    },
-    "accessTier": {
-      "value": "Hot"
-    },
-    "publicNetworkAccess": {
-      "value": "Enabled"
-    },
-    "allowCrossTenantReplication": {
-      "value": false
-    },
-    "networkAclsBypass": {
-      "value": "AzureServices"
-    },
-    "networkAclsDefaultAction": {
-      "value": "Allow"
-    },
-    "networkAclsIpRules": {
-      "value": []
-    },
-    "dnsEndpointType": {
-      "value": "Standard"
-    },
-    "largeFileSharesState": {
-      "value": "Enabled"
-    },
-    "keySource": {
-      "value": "Microsoft.Storage"
-    },
-    "encryptionEnabled": {
-      "value": true
-    },
-    "keyTypeForTableAndQueueEncryption": {
-      "value": "Account"
-    },
-    "infrastructureEncryptionEnabled": {
-      "value": false
-    },
-    "isBlobSoftDeleteEnabled": {
-      "value": true
-    },
-    "blobSoftDeleteRetentionDays": {
-      "value": 7
-    },
-    "isContainerSoftDeleteEnabled": {
-      "value": true
-    },
-    "containerSoftDeleteRetentionDays": {
-      "value": 7
-    },
-    "isShareSoftDeleteEnabled": {
-      "value": true
-    },
-    "shareSoftDeleteRetentionDays": {
-      "value": 7
     }
   }
 }

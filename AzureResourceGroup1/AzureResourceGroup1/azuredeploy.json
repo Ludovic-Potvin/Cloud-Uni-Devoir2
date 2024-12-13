@@ -2,206 +2,308 @@
   "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
+    "subscriptionId": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
     "location": {
+      "type": "string"
+    },
+    "use32BitWorkerProcess": {
+      "type": "bool"
+    },
+    "ftpsState": {
       "type": "string"
     },
     "storageAccountName": {
       "type": "string"
     },
-    "containerName": {
+    "netFrameworkVersion": {
       "type": "string"
     },
-    "accountType": {
+    "sku": {
       "type": "string"
     },
-    "kind": {
+    "skuCode": {
       "type": "string"
     },
-    "minimumTlsVersion": {
+    "workerSize": {
       "type": "string"
     },
-    "supportsHttpsTrafficOnly": {
+    "workerSizeId": {
+      "type": "string"
+    },
+    "numberOfWorkers": {
+      "type": "string"
+    },
+    "repoUrl": {
+      "type": "string"
+    },
+    "branch": {
+      "type": "string"
+    },
+    "oidcUserIdentityName": {
+      "type": "string"
+    },
+    "hostingPlanName": {
+      "type": "string"
+    },
+    "serverFarmResourceGroup": {
+      "type": "string"
+    },
+    "alwaysOn": {
       "type": "bool"
-    },
-    "allowBlobPublicAccess": {
-      "type": "bool"
-    },
-    "allowSharedKeyAccess": {
-      "type": "bool"
-    },
-    "defaultOAuth": {
-      "type": "bool"
-    },
-    "accessTier": {
-      "type": "string"
-    },
-    "publicNetworkAccess": {
-      "type": "string"
-    },
-    "allowCrossTenantReplication": {
-      "type": "bool"
-    },
-    "networkAclsBypass": {
-      "type": "string"
-    },
-    "networkAclsDefaultAction": {
-      "type": "string"
-    },
-    "networkAclsIpRules": {
-      "type": "array"
-    },
-    "dnsEndpointType": {
-      "type": "string"
-    },
-    "largeFileSharesState": {
-      "type": "string"
-    },
-    "keySource": {
-      "type": "string"
-    },
-    "encryptionEnabled": {
-      "type": "bool"
-    },
-    "keyTypeForTableAndQueueEncryption": {
-      "type": "string"
-    },
-    "infrastructureEncryptionEnabled": {
-      "type": "bool"
-    },
-    "isBlobSoftDeleteEnabled": {
-      "type": "bool"
-    },
-    "blobSoftDeleteRetentionDays": {
-      "type": "int"
-    },
-    "isContainerSoftDeleteEnabled": {
-      "type": "bool"
-    },
-    "containerSoftDeleteRetentionDays": {
-      "type": "int"
-    },
-    "isShareSoftDeleteEnabled": {
-      "type": "bool"
-    },
-    "shareSoftDeleteRetentionDays": {
-      "type": "int"
     }
   },
-  "variables": {},
+  "variables": {
+    "contentShare": "addtoazurebusfunction8421"
+  },
   "resources": [
     {
-      "name": "[parameters('storageAccountName')]",
-      "type": "Microsoft.Storage/storageAccounts",
-      "apiVersion": "2023-05-01",
+      "apiVersion": "2022-03-01",
+      "name": "[parameters('name')]",
+      "type": "Microsoft.Web/sites",
+      "kind": "functionapp",
       "location": "[parameters('location')]",
+      "tags": {
+        "hidden-link: /app-insights-resource-id": "/subscriptions/f8ee07ed-b563-4b27-931f-56bdf1405242/resourceGroups/Devoir2/providers/Microsoft.Insights/components/addtoazurebusfunction"
+      },
+      "dependsOn": [
+        "microsoft.insights/components/addtoazurebusfunction",
+        "[concat('Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]",
+        "[concat('Microsoft.Storage/storageAccounts/', parameters('storageAccountName'))]"
+      ],
       "properties": {
-        "minimumTlsVersion": "[parameters('minimumTlsVersion')]",
-        "supportsHttpsTrafficOnly": "[parameters('supportsHttpsTrafficOnly')]",
-        "allowBlobPublicAccess": "[parameters('allowBlobPublicAccess')]",
-        "allowSharedKeyAccess": "[parameters('allowSharedKeyAccess')]",
-        "defaultToOAuthAuthentication": "[parameters('defaultOAuth')]",
-        "accessTier": "[parameters('accessTier')]",
-        "publicNetworkAccess": "[parameters('publicNetworkAccess')]",
-        "allowCrossTenantReplication": "[parameters('allowCrossTenantReplication')]",
-        "networkAcls": {
-          "bypass": "[parameters('networkAclsBypass')]",
-          "defaultAction": "[parameters('networkAclsDefaultAction')]",
-          "ipRules": "[parameters('networkAclsIpRules')]"
+        "name": "[parameters('name')]",
+        "siteConfig": {
+          "appSettings": [
+            {
+              "name": "FUNCTIONS_EXTENSION_VERSION",
+              "value": "~4"
+            },
+            {
+              "name": "FUNCTIONS_WORKER_RUNTIME",
+              "value": "dotnet-isolated"
+            },
+            {
+              "name": "WEBSITE_USE_PLACEHOLDER_DOTNETISOLATED",
+              "value": "1"
+            },
+            {
+              "name": "APPLICATIONINSIGHTS_CONNECTION_STRING",
+              "value": "[reference('microsoft.insights/components/addtoazurebusfunction', '2015-05-01').ConnectionString]"
+            },
+            {
+              "name": "AzureWebJobsStorage",
+              "value": "[concat('DefaultEndpointsProtocol=https;AccountName=',parameters('storageAccountName'),';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName')), '2019-06-01').keys[0].value,';EndpointSuffix=','core.windows.net')]"
+            },
+            {
+              "name": "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING",
+              "value": "[concat('DefaultEndpointsProtocol=https;AccountName=',parameters('storageAccountName'),';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName')), '2019-06-01').keys[0].value,';EndpointSuffix=','core.windows.net')]"
+            },
+            {
+              "name": "WEBSITE_CONTENTSHARE",
+              "value": "[variables('contentShare')]"
+            }
+          ],
+          "cors": {
+            "allowedOrigins": [
+              "https://portal.azure.com"
+            ]
+          },
+          "use32BitWorkerProcess": "[parameters('use32BitWorkerProcess')]",
+          "ftpsState": "[parameters('ftpsState')]",
+          "netFrameworkVersion": "[parameters('netFrameworkVersion')]"
         },
-        "dnsEndpointType": "[parameters('dnsEndpointType')]",
-        "largeFileSharesState": "[parameters('largeFileSharesState')]",
-        "encryption": {
-          "keySource": "[parameters('keySource')]",
-          "services": {
-            "blob": {
-              "enabled": "[parameters('encryptionEnabled')]"
-            },
-            "file": {
-              "enabled": "[parameters('encryptionEnabled')]"
-            },
-            "table": {
-              "enabled": "[parameters('encryptionEnabled')]"
-            },
-            "queue": {
-              "enabled": "[parameters('encryptionEnabled')]"
+        "clientAffinityEnabled": false,
+        "virtualNetworkSubnetId": null,
+        "functionsRuntimeAdminIsolationEnabled": false,
+        "publicNetworkAccess": "Enabled",
+        "httpsOnly": true,
+        "serverFarmId": "[concat('/subscriptions/', parameters('subscriptionId'),'/resourcegroups/', parameters('serverFarmResourceGroup'), '/providers/Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]"
+      },
+      "resources": [
+        {
+          "type": "Microsoft.Web/sites/basicPublishingCredentialsPolicies",
+          "apiVersion": "2022-09-01",
+          "name": "[concat(parameters('name'), '/scm')]",
+          "properties": {
+            "allow": false
+          },
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/Sites', parameters('name'))]"
+          ]
+        },
+        {
+          "type": "Microsoft.Web/sites/basicPublishingCredentialsPolicies",
+          "apiVersion": "2022-09-01",
+          "name": "[concat(parameters('name'), '/ftp')]",
+          "properties": {
+            "allow": false
+          },
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/Sites', parameters('name'))]"
+          ]
+        },
+        {
+          "type": "sourcecontrols",
+          "name": "web",
+          "apiVersion": "2020-12-01",
+          "properties": {
+            "RepoUrl": "[parameters('repoUrl')]",
+            "branch": "[parameters('branch')]",
+            "IsManualIntegration": false,
+            "deploymentRollbackEnabled": false,
+            "isMercurial": false,
+            "isGitHubAction": true,
+            "gitHubActionConfiguration": {
+              "generateWorkflowFile": true,
+              "workflowSettings": {
+                "appType": "functionapp",
+                "authType": "oidc",
+                "publishType": "code",
+                "os": "windows",
+                "runtimeStack": "dotnet",
+                "workflowApiVersion": "2022-10-01",
+                "slotName": "production",
+                "variables": {
+                  "runtimeVersion": "8.0.x",
+                  "resourceGroup": "Devoir2",
+                  "clientId": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('oidcUserIdentityName')), '2018-11-30').clientId]",
+                  "tenantId": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('oidcUserIdentityName')), '2018-11-30').tenantId]",
+                  "isRemoveEnvEnabled": true
+                }
+              }
             }
           },
-          "requireInfrastructureEncryption": "[parameters('infrastructureEncryptionEnabled')]"
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/Sites', parameters('name'))]",
+            "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('oidcUserIdentityName'))]"
+          ]
         }
-      },
+      ]
+    },
+    {
+      "apiVersion": "2018-11-30",
+      "name": "[parameters('oidcUserIdentityName')]",
+      "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
+      "location": "[parameters('location')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/Sites', parameters('name'))]"
+      ],
+      "properties": {},
+      "resources": [
+        {
+          "apiVersion": "2022-01-31-preview",
+          "name": "[uniqueString(resourceGroup().id)]",
+          "type": "federatedIdentityCredentials",
+          "dependsOn": [
+            "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('oidcUserIdentityName'))]"
+          ],
+          "properties": {
+            "audiences": [
+              "api://AzureADTokenExchange"
+            ],
+            "issuer": "https://token.actions.githubusercontent.com",
+            "subject": "repo:Ludovic-Potvin/Cloud-Uni-Devoir2:ref:refs/heads/main"
+          }
+        }
+      ]
+    },
+    {
+      "apiVersion": "2022-04-01",
+      "name": "[guid(resourceGroup().id, deployment().name)]",
+      "type": "Microsoft.Authorization/roleAssignments",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/Sites', parameters('name'))]",
+        "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('oidcUserIdentityName'))]"
+      ],
+      "scope": "[concat('Microsoft.web/sites/', parameters('name'))]",
+      "properties": {
+        "roleDefinitionId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/de139f84-1756-47ae-9be6-808fbbe84772')]",
+        "principalId": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('oidcUserIdentityName')), '2018-11-30').principalId]",
+        "principalType": "ServicePrincipal"
+      }
+    },
+    {
+      "apiVersion": "2018-11-01",
+      "name": "[parameters('hostingPlanName')]",
+      "type": "Microsoft.Web/serverfarms",
+      "location": "[parameters('location')]",
+      "kind": "",
+      "tags": null,
       "dependsOn": [],
+      "properties": {
+        "name": "[parameters('hostingPlanName')]",
+        "workerSize": "[parameters('workerSize')]",
+        "workerSizeId": "[parameters('workerSizeId')]",
+        "numberOfWorkers": "[parameters('numberOfWorkers')]"
+      },
       "sku": {
-        "name": "[parameters('accountType')]"
-      },
-      "kind": "[parameters('kind')]",
-      "tags": {}
+        "Tier": "[parameters('sku')]",
+        "Name": "[parameters('skuCode')]"
+      }
     },
     {
-      "name": "[concat(parameters('storageAccountName'), '/default')]",
-      "type": "Microsoft.Storage/storageAccounts/blobServices",
-      "apiVersion": "2023-05-01",
-      "properties": {
-        "deleteRetentionPolicy": {
-          "enabled": "[parameters('isBlobSoftDeleteEnabled')]",
-          "days": "[parameters('blobSoftDeleteRetentionDays')]"
-        },
-        "containerDeleteRetentionPolicy": {
-          "enabled": "[parameters('isContainerSoftDeleteEnabled')]",
-          "days": "[parameters('containerSoftDeleteRetentionDays')]"
-        }
-      },
+      "apiVersion": "2020-02-02-preview",
+      "name": "addtoazurebusfunction",
+      "type": "microsoft.insights/components",
+      "location": "canadacentral",
+      "tags": null,
       "dependsOn": [
-        "[concat('Microsoft.Storage/storageAccounts/', parameters('storageAccountName'))]"
-      ]
+        "newWorkspaceTemplate"
+      ],
+      "properties": {
+        "ApplicationId": "[parameters('name')]",
+        "Request_Source": "IbizaWebAppExtensionCreate",
+        "Flow_Type": "Redfield",
+        "Application_Type": "web",
+        "WorkspaceResourceId": "/subscriptions/f8ee07ed-b563-4b27-931f-56bdf1405242/resourceGroups/DefaultResourceGroup-CCAN/providers/Microsoft.OperationalInsights/workspaces/DefaultWorkspace-f8ee07ed-b563-4b27-931f-56bdf1405242-CCAN"
+      }
     },
     {
-      "name": "[concat(parameters('storageAccountName'), '/default')]",
-      "type": "Microsoft.Storage/storageAccounts/fileservices",
-      "apiVersion": "2023-05-01",
-      "properties": {
-        "protocolSettings": null,
-        "shareDeleteRetentionPolicy": {
-          "enabled": "[parameters('isShareSoftDeleteEnabled')]",
-          "days": "[parameters('shareSoftDeleteRetentionDays')]"
-        }
+      "apiVersion": "2022-05-01",
+      "type": "Microsoft.Storage/storageAccounts",
+      "name": "[parameters('storageAccountName')]",
+      "dependsOn": [],
+      "location": "[parameters('location')]",
+      "tags": null,
+      "sku": {
+        "name": "Standard_LRS"
       },
-      "dependsOn": [
-        "[concat('Microsoft.Storage/storageAccounts/', parameters('storageAccountName'))]",
-        "[concat(concat('Microsoft.Storage/storageAccounts/', parameters('storageAccountName')), '/blobServices/default')]"
-      ]
+      "properties": {
+        "supportsHttpsTrafficOnly": true,
+        "minimumTlsVersion": "TLS1_2",
+        "defaultToOAuthAuthentication": true,
+        "allowBlobPublicAccess": false
+      }
     },
     {
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2021-04-01",
-      "name": "nestedDeployment-createContainer",
-      "dependsOn": [
-        "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]"
-      ],
+      "name": "newWorkspaceTemplate",
+      "resourceGroup": "DefaultResourceGroup-CCAN",
+      "subscriptionId": "[parameters('subscriptionId')]",
       "properties": {
         "mode": "Incremental",
         "template": {
-          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
           "contentVersion": "1.0.0.0",
+          "parameters": {},
+          "variables": {},
           "resources": [
             {
-              "type": "Microsoft.Storage/storageAccounts/blobServices/containers",
-              "apiVersion": "2022-09-01",
-              "name": "[format('{0}/default/{1}', parameters('storageAccountName'), parameters('containerName'))]",
-              "properties": {
-                "deleteRetentionPolicy": {
-                  "enabled": "[parameters('isBlobSoftDeleteEnabled')]",
-                  "days": "[parameters('blobSoftDeleteRetentionDays')]"
-                },
-                "containerDeleteRetentionPolicy": {
-                  "enabled": "[parameters('isContainerSoftDeleteEnabled')]",
-                  "days": "[parameters('containerSoftDeleteRetentionDays')]"
-                }
-              }
+              "apiVersion": "2020-08-01",
+              "name": "DefaultWorkspace-f8ee07ed-b563-4b27-931f-56bdf1405242-CCAN",
+              "type": "Microsoft.OperationalInsights/workspaces",
+              "location": "canadacentral",
+              "properties": {}
             }
           ]
         }
       }
     }
-  ],
-  "outputs": {}
+  ]
 }
