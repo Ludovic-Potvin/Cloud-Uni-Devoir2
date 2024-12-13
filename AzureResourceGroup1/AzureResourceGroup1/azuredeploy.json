@@ -306,19 +306,7 @@
             {
               "type": "Microsoft.Storage/storageAccounts/blobServices/containers",
               "apiVersion": "2022-09-01",
-              "name": "[format('{0}/default/{1}', parameters('storageAccountName'), 'storageinput')]",
-              "properties": {}
-            },
-            {
-              "type": "Microsoft.Storage/storageAccounts/blobServices/containers",
-              "apiVersion": "2022-09-01",
-              "name": "[format('{0}/default/{1}', parameters('storageAccountName'), 'storageoutput')]",
-              "properties": {}
-            },
-            {
-              "type": "Microsoft.Storage/storageAccounts/queueServices/queues",
-              "apiVersion": "2022-09-01",
-              "name": "[format('{0}/default/{1}', parameters('storageAccountName'), 'storagequeue')]",
+              "name": "[format('{0}/default/{1}', parameters('storageAccountName'), 'storageinput1')]",
               "properties": {}
             }
           ]
