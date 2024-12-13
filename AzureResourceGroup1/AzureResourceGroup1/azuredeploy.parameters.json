@@ -3,16 +3,49 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "subscriptionId": {
-      "value": "f8ee07ed-b563-4b27-931f-56bdf1405242"
+      "value": "970fcef5-9c23-4f7d-a11b-5a96d104f066"
+    },
+    "name": {
+      "value": "LupoFunctionApp"
+    },
+    "resourceGroup": {
+      "value": "Lupo"
     },
     "location": {
       "value": "Canada Central"
     },
-    "storageAccountName": {
-      "value": "devoir2storageaccount1"
+    "use32BitWorkerProcess": {
+      "value": false
     },
-    "functionAppName": {
-      "value": "devoir2functionapp"
+    "ftpsState": {
+      "value": "FtpsOnly"
+    },
+    "netFrameworkVersion": {
+      "value": "v8.0"
+    },
+    "sku": {
+      "value": "Dynamic"
+    },
+    "skuCode": {
+      "value": "Y1"
+    },
+    "workerSize": {
+      "value": "0"
+    },
+    "workerSizeId": {
+      "value": "0"
+    },
+    "numberOfWorkers": {
+      "value": "1"
+    },
+    "hostingPlanName": {
+      "value": "ASP-Lupo-aaf9"
+    },
+    "alwaysOn": {
+      "value": false
+    },
+    "WorkSpaceName": {
+      "value": "DefaultWorkSpace"
     }
   }
 }
