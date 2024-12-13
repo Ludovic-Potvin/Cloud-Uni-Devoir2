@@ -27,5 +27,5 @@ steps:
     templateLocation: 'Linked artifact'
     csmFile: '$(Build.SourcesDirectory)/AzureResourceGroup1/AzureResourceGroup1/azuredeploy.json'
     csmParametersFile: '$(Build.SourcesDirectory)/AzureResourceGroup1/AzureResourceGroup1/azuredeploy.parameters.json'
-    overrideParameters: '-customData $(CloudInitContent) -adminPassword $(AdminPass)'
+    overrideParameters: '-customData $(CloudInitContent)'
     deploymentMode: 'Incremental'
