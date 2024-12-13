@@ -8,6 +8,9 @@
     "storageAccountName": {
       "value": "devoir2storageaccount1"
     },
+    "containerName": {
+      "value": "devoir2container"
+    },
     "accountType": {
       "value": "Standard_LRS"
     },
