@@ -12,15 +12,6 @@ variables:
 - name: CloudInitContent
 
 steps:
-- task: PowerShell@2
-  inputs:
-    targetType: 'inline'
-    script: |
-      $CloudContent = Get-Content -Path .\AzureResourceGroup1\Cloud-Init.txt -Raw
-      Write-Host $CloudContent
-      $encodedContent = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($CloudContent))
-      Write-Host $encodedContent
-      Write-Host "##vso[task.setvariable variable=CloudInitContent;]$encodedContent"
 
 - script: |
     echo $(CloudInitContent)
