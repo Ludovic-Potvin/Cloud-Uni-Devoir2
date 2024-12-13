@@ -61,7 +61,7 @@
       "name": "functionAppPlan",
       "location": "[parameters('location')]",
       "properties": {
-        "sku": {
+        "SKU": {
           "tier": "Dynamic",
           "name": "Y1"
         }
