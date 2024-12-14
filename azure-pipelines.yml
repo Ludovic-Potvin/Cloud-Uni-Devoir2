@@ -9,23 +9,27 @@ trigger:
 pool: "Azure Pipelines"
 
 variables:
-- name: CloudInitContent
+  - name: CloudInitContent
+  - name: AzureAppInfrastructure
+    value: 'AzureResourceGroup1\AzureResourceGroup1'
 
-jobs:
-- job: Deploy_main
-  steps:
-
-  - task: AzureResourceManagerTemplateDeployment@3
-    displayName: 'Deploy_azure_ressources'
-    inputs:
-      deploymentScope: 'Resource Group'
-      azureResourceManagerConnection: 'Azure subscription 1(f8ee07ed-b563-4b27-931f-56bdf1405242)'
-      subscriptionId: 'f8ee07ed-b563-4b27-931f-56bdf1405242'
-      action: 'Create Or Update Resource Group'
-      resourceGroupName: 'Devoir2'
-      location: 'East US'
-      templateLocation: 'Linked artifact'
-      csmFile: '$(Build.SourcesDirectory)/AzureResourceGroup1/AzureResourceGroup1/azuredeploy.json'
-      csmParametersFile: '$(Build.SourcesDirectory)/AzureResourceGroup1/AzureResourceGroup1/azuredeploy.parameters.json'
-      overrideParameters: ''
-      deploymentMode: 'Incremental'
+- stage: Infra
+  displayName: Infrastructure Deployment
+  jobs:
+  - job: Infra
+    displayName: Infrastructure Deployment
+    steps:
+    - task: AzureResourceManagerTemplateDeployment@3
+      displayName: ARM Template Deployment
+      inputs:
+        deploymentScope: 'Resource Group'
+        azureResourceManagerConnection: 'Azure subscription 1(970fcef5-9c23-4f7d-a11b-5a96d104f066)'
+        subscriptionId: '970fcef5-9c23-4f7d-a11b-5a96d104f066'
+        action: 'Create Or Update Resource Group'
+        resourceGroupName: '$(resourceGroupName)'
+        location: '$(rgLocation)'
+        templateLocation: 'Linked artifact'
+        csmFile: '$(Build.SourcesDirectory)\$(AzureAppInfrastructure)\azuredeploy.json'
+        csmParametersFile: '$(Build.SourcesDirectory)\$(AzureAppInfrastructure)\azuredeploy.parameters.json'
+        overrideParameters: '-name $(AzureFunctionAppName) -resourceGroup $(resourceGroupName)'
+        deploymentMode: 'Incremental'
