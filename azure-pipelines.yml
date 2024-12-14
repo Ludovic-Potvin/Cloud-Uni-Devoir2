@@ -24,8 +24,8 @@ stages:
       displayName: ARM Template Deployment
       inputs:
         deploymentScope: 'Resource Group'
-        azureResourceManagerConnection: 'Azure subscription 1(970fcef5-9c23-4f7d-a11b-5a96d104f066)'
-        subscriptionId: '970fcef5-9c23-4f7d-a11b-5a96d104f066'
+        azureResourceManagerConnection: 'Azure subscription 1(f8ee07ed-b563-4b27-931f-56bdf1405242)'
+        subscriptionId: 'f8ee07ed-b563-4b27-931f-56bdf1405242'
         action: 'Create Or Update Resource Group'
         resourceGroupName: '$(resourceGroupName)'
         location: '$(rgLocation)'
