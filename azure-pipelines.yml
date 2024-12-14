@@ -12,6 +12,10 @@ variables:
   - name: CloudInitContent
   - name: AzureAppInfrastructure
     value: 'AzureResourceGroup1\AzureResourceGroup1'
+  - name: resourceGroupName
+    value: 'Lupo'
+  - name: rgLocation
+    value: 'Canada Central'
 
 stages:
 - stage: Infra
