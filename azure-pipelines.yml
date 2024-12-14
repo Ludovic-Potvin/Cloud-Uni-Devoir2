@@ -11,7 +11,7 @@ pool: "Azure Pipelines"
 variables:
   - name: CloudInitContent
   - name: AzureAppInfrastructure
-    value: 'AzureResourceGroup1\AzureResourceGroup1'
+    value: 'AzureResourceGroup1/AzureResourceGroup1'
   - name: resourceGroupName
     value: 'Lupo'
   - name: rgLocation
@@ -34,7 +34,7 @@ stages:
         resourceGroupName: '$(resourceGroupName)'
         location: '$(rgLocation)'
         templateLocation: 'Linked artifact'
-        csmFile: '$(Build.SourcesDirectory)\$(AzureAppInfrastructure)\azuredeploy.json'
-        csmParametersFile: '$(Build.SourcesDirectory)\$(AzureAppInfrastructure)\azuredeploy.parameters.json'
+        csmFile: '$(Build.SourcesDirectory)/$(AzureAppInfrastructure)/azuredeploy.json'
+        csmParametersFile: '$(Build.SourcesDirectory)/$(AzureAppInfrastructure)/azuredeploy.parameters.json'
         overrideParameters: '-name $(AzureFunctionAppName) -resourceGroup $(resourceGroupName)'
         deploymentMode: 'Incremental'
