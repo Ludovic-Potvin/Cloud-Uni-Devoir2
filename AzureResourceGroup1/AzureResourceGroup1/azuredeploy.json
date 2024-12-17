@@ -17,12 +17,6 @@
     "serviceBusQueueName": {
       "type": "String"
     },
-    "functionAppName": {
-      "type": "String"
-    },
-    "appServicePlanName": {
-      "type": "String"
-    },
     "hostingPlanName": {
       "type": "String"
     },
