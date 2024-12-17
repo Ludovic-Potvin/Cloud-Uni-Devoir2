@@ -26,13 +26,6 @@ variables:
   - name: BlobString
     value: 'assignedbyoutput'
 
-resources:
-  pipelines:
-    - pipeline: 'AzureFunctionApp'
-      source: 'AzureFunctionApp'
-      project: 'AzureFunctionApp'
-      trigger: true
-
 stages:
 - stage: Infra
   displayName: Infrastructure Deployment
