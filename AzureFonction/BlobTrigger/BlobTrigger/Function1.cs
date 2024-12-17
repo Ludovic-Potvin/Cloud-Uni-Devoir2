@@ -15,7 +15,7 @@ namespace BlobTrigger
         }
 
         [Function(nameof(Function1))]
-        public async Task Run([BlobTrigger("input-container/{name}", Connection = "DefaultEndpointsProtocol=https;AccountName=devoir2storageaccount1;AccountKey=CB0zBAZO5eVQVoDEGKFmjJFMdVrYORyXxIb0u56rJb8s2GrYGIk3114Riz5fjD1QU+Cq9A79RUAG+AStIDP8ug==;EndpointSuffix=core.windows.net")] Stream stream, string name)
+        public async Task Run([BlobTrigger("blobintput/{name}", Connection = "connexionstring")] Stream stream, string name)
         {
             using var blobStreamReader = new StreamReader(stream);
             var content = await blobStreamReader.ReadToEndAsync();
