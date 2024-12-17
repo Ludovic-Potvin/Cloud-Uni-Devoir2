@@ -215,7 +215,7 @@
     },
     {
       "apiVersion": "2022-03-01",
-      "name": "[parameters('name')]",
+      "name": "[parameters('storageAccountName')]",
       "type": "Microsoft.Web/sites",
       "kind": "functionapp",
       "location": "[parameters('location')]",
@@ -227,7 +227,7 @@
           "[concat('Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]"
       ],
       "properties": {
-          "name": "[parameters('name')]",
+          "name": "[parameters('storageAccountName')]",
           "siteConfig": {
               "appSettings": [
                   {
@@ -279,23 +279,23 @@
           {
               "type": "Microsoft.Web/sites/basicPublishingCredentialsPolicies",
               "apiVersion": "2022-09-01",
-              "name": "[concat(parameters('name'), '/scm')]",
+              "name": "[concat(parameters('storageAccountName'), '/scm')]",
               "properties": {
                   "allow": false
               },
               "dependsOn": [
-                  "[resourceId('Microsoft.Web/Sites', parameters('name'))]"
+                  "[resourceId('Microsoft.Web/Sites', parameters('storageAccountName'))]"
               ]
           },
           {
               "type": "Microsoft.Web/sites/basicPublishingCredentialsPolicies",
               "apiVersion": "2022-09-01",
-              "name": "[concat(parameters('name'), '/ftp')]",
+              "name": "[concat(parameters('storageAccountName'), '/ftp')]",
               "properties": {
                   "allow": false
               },
               "dependsOn": [
-                  "[resourceId('Microsoft.Web/Sites', parameters('name'))]"
+                  "[resourceId('Microsoft.Web/Sites', parameters('storageAccountName'))]"
               ]
           }
       ]
@@ -329,7 +329,7 @@
           "newWorkspaceTemplate"
       ],
       "properties": {
-          "ApplicationId": "[parameters('name')]",
+          "ApplicationId": "[parameters('storageAccountName')]",
           "Request_Source": "IbizaWebAppExtensionCreate",
           "Flow_Type": "Redfield",
           "Application_Type": "web",
