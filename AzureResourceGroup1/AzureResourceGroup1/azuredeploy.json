@@ -18,7 +18,10 @@
       "type": "String"
     },
     "hostingPlanName": {
-      "type": "string"
+      "type": "String"
+    },
+    "subscriptionId": {
+      "type": "String"
     },
     "accountType": {
       "type": "String"

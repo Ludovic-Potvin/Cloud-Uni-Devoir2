@@ -20,6 +20,9 @@
     "hostingPlanName": {
       "value": "ASP-Lupo-ade8"
     },
+    "subscriptionId":{
+      "value": "f8ee07ed-b563-4b27-931f-56bdf1405242"
+    },
     "accountType": {
       "value": "Standard_LRS"
     },
