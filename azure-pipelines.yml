@@ -21,7 +21,7 @@ variables:
     value: 'Canada Central'
 
   - name: AzureAppFunction
-    value: 'AzureFunction/BlobFonction1'
+    value: 'AzureFunction/AzureFonction1'
 
   - name: AzureFunctionAppName
     value: 'LupoFunctionApp'
