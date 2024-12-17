@@ -54,11 +54,6 @@ stages:
         echo ##vso[task.setvariable variable=BlobString;isOutput=true;isSecure=true]$(Deployment1.blobstoragestring.value)
       name: AssignKey
 
-    - script: |
-        echo "BlobStoragestring value: $(Deployment1.blobstoragestring.value)"
-      displayName: 'Log BlobStoragestring Value'
-      name: LogBlobStorageValue
-
 - stage: Function
   displayName: Function Deployment
 
