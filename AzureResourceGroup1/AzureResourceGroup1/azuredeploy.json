@@ -217,44 +217,44 @@
         "duplicateDetectionHistoryTimeWindow": "PT10M",
         "maxDeliveryCount": 10,
         "enableBatchedOperations": true
+      }
+    },
+    {
+      "type": "Microsoft.Web/serverfarms",
+      "apiVersion": "2022-09-01",
+      "name": "LupoAppServicePlan",
+      "location": "eastus",
+      "sku": {
+        "name": "Y1", // Consumption plan
+        "tier": "Dynamic"
       },
-      {
-        "type": "Microsoft.Web/serverfarms",
-        "apiVersion": "2022-09-01",
-        "name": "LupoAppServicePlan",
-        "location": "eastus",
-        "sku": {
-          "name": "Y1",
-          "tier": "Dynamic"
-        },
-        "properties": {
-          "reserved": false
-        }
-      },
-      {
-        "type": "Microsoft.Web/sites",
-        "apiVersion": "2022-09-01",
-        "name": "LupoFunctionApp",
-        "location": "eastus",
-        "dependsOn": [
-          "Microsoft.Storage/storageAccounts/mylupostorage",
-          "Microsoft.Web/serverfarms/LupoAppServicePlan"
-        ],
-        "kind": "functionapp",
-        "properties": {
-          "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', 'LupoAppServicePlan')]",
-          "siteConfig": {
-            "appSettings": [
-              {
-                "name": "AzureWebJobsStorage",
-                "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', 'mylupostorage', ';AccountKey=', listKeys(resourceId('Microsoft.Storage/storageAccounts', 'mylupostorage'), '2022-09-01').keys[0].value)]"
-              },
-              {
-                "name": "FUNCTIONS_WORKER_RUNTIME",
-                "value": "dotnet"
-              }
-            ]
-          }
+      "properties": {
+        "reserved": false
+      }
+    },
+    {
+      "type": "Microsoft.Web/sites",
+      "apiVersion": "2022-09-01",
+      "name": "LupoFunctionApp",
+      "location": "eastus",
+      "dependsOn": [
+        "Microsoft.Storage/storageAccounts/mylupostorage",
+        "Microsoft.Web/serverfarms/LupoAppServicePlan"
+      ],
+      "kind": "functionapp",
+      "properties": {
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', 'LupoAppServicePlan')]",
+        "siteConfig": {
+          "appSettings": [
+            {
+              "name": "AzureWebJobsStorage",
+              "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', 'mylupostorage', ';AccountKey=', listKeys(resourceId('Microsoft.Storage/storageAccounts', 'mylupostorage'), '2022-09-01').keys[0].value)]"
+            },
+            {
+              "name": "FUNCTIONS_WORKER_RUNTIME",
+              "value": "dotnet"
+            }
+          ]
         }
       }
     }
