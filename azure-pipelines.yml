@@ -10,12 +10,21 @@ pool: "Azure Pipelines"
 
 variables:
   - name: CloudInitContent
+
   - name: AzureAppInfrastructure
     value: 'AzureResourceGroup1/AzureResourceGroup1'
+
   - name: resourceGroupName
     value: 'Lupo'
+
   - name: rgLocation
     value: 'Canada Central'
+
+  - name: AzureAppFunction
+    value: 'Function'
+
+  - name: AzureFunctionAppName
+    value: 'LupoFunctionApp'
 
 stages:
 - stage: Infra

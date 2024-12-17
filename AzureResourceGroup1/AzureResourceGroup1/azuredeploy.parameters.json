@@ -2,50 +2,71 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "subscriptionId": {
-      "value": "f8ee07ed-b563-4b27-931f-56bdf1405242"
-    },
-    "name": {
-      "value": "LupoFunctionApp"
-    },
-    "resourceGroup": {
-      "value": "Lupo"
-    },
     "location": {
       "value": "Canada Central"
     },
-    "use32BitWorkerProcess": {
+    "storageAccountName": {
+      "value": "blobfunctionlupo"
+    },
+    "storageBlobContainerName": {
+      "value": "blob"
+    },
+    "accountType": {
+      "value": "Standard_LRS"
+    },
+    "kind": {
+      "value": "StorageV2"
+    },
+    "minimumTlsVersion": {
+      "value": "TLS1_2"
+    },
+    "supportsHttpsTrafficOnly": {
+      "value": true
+    },
+    "allowBlobPublicAccess": {
       "value": false
     },
-    "ftpsState": {
-      "value": "FtpsOnly"
+    "allowSharedKeyAccess": {
+      "value": true
     },
-    "netFrameworkVersion": {
-      "value": "v8.0"
-    },
-    "sku": {
-      "value": "Dynamic"
-    },
-    "skuCode": {
-      "value": "Y1"
-    },
-    "workerSize": {
-      "value": "0"
-    },
-    "workerSizeId": {
-      "value": "0"
-    },
-    "numberOfWorkers": {
-      "value": "1"
-    },
-    "hostingPlanName": {
-      "value": "ASP-Lupo-aaf9"
-    },
-    "alwaysOn": {
+    "defaultOAuth": {
       "value": false
     },
-    "WorkSpaceName": {
-      "value": "DefaultWorkSpace"
+    "accessTier": {
+      "value": "Hot"
+    },
+    "publicNetworkAccess": {
+      "value": "Enabled"
+    },
+    "allowCrossTenantReplication": {
+      "value": false
+    },
+    "networkAclsBypass": {
+      "value": "AzureServices"
+    },
+    "networkAclsDefaultAction": {
+      "value": "Allow"
+    },
+    "networkAclsIpRules": {
+      "value": []
+    },
+    "dnsEndpointType": {
+      "value": "Standard"
+    },
+    "largeFileSharesState": {
+      "value": "Enabled"
+    },
+    "keySource": {
+      "value": "Microsoft.Storage"
+    },
+    "encryptionEnabled": {
+      "value": true
+    },
+    "keyTypeForTableAndQueueEncryption": {
+      "value": "Account"
+    },
+    "infrastructureEncryptionEnabled": {
+      "value": false
     }
   }
 }
