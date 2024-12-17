@@ -223,19 +223,20 @@
       "type": "Microsoft.Web/serverfarms",
       "apiVersion": "2022-09-01",
       "name": "LupoAppServicePlan",
-      "location": "eastus",
+      "location": "[variables('locationLower')]",
       "sku": {
-          "name": "[parameters('accountType')]"
-       },
-       "properties": {
-          "reserved": false
-        }
+        "name": "F1",
+        "tier": "Free"
       },
+      "properties": {
+        "reserved": false
+      }
+    },
     {
       "type": "Microsoft.Web/sites",
       "apiVersion": "2022-09-01",
       "name": "LupoFunctionApp",
-      "location": "eastus",
+      "location": "[variables('locationLower')]",
       "dependsOn": [
         "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]",
         "Microsoft.Web/serverfarms/LupoAppServicePlan"
