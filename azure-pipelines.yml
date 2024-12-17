@@ -6,7 +6,7 @@
 trigger:
 - main
 
-pool: "default"
+pool: "Azure Pipelines"
 
 variables:
   - name: resourceGroupName
