@@ -225,7 +225,7 @@
       "name": "LupoAppServicePlan",
       "location": "eastus",
       "sku": {
-        "name": "Y1", // Consumption plan
+        "name": "Y1",
         "tier": "Dynamic"
       },
       "properties": {
@@ -238,7 +238,7 @@
       "name": "LupoFunctionApp",
       "location": "eastus",
       "dependsOn": [
-        "Microsoft.Storage/storageAccounts/mylupostorage",
+        "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]",
         "Microsoft.Web/serverfarms/LupoAppServicePlan"
       ],
       "kind": "functionapp",
