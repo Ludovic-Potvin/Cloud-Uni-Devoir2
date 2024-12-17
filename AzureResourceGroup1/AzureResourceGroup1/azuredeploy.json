@@ -241,9 +241,9 @@
     {
       "type": "Microsoft.Web/sites",
       "apiVersion": "2021-02-01",
+      "name": "[parameters('functionAppName')]",
       "location": "[parameters('location')]",
       "properties": {
-        "name": "[parameters('functionAppName')]",
         "serverFarmId": "[resourceId('Microsoft.Web/serverFarms', parameters('appServicePlanName'))]",
         "siteConfig": {
           "appSettings": [
