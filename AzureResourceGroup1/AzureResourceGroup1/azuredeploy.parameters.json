@@ -11,6 +11,12 @@
     "storageBlobContainerName": {
       "value": "blob"
     },
+    "serviceBusName": {
+      "value": "servicebuslupo"
+    },
+    "serviceBusQueueName": {
+      "value": "servicebuslupoqueue"
+    },
     "accountType": {
       "value": "Standard_LRS"
     },

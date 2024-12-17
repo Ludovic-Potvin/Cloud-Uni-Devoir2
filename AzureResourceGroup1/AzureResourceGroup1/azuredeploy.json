@@ -11,6 +11,12 @@
     "storageBlobContainerName": {
       "type": "String"
     },
+    "serviceBusName": {
+      "type": "String"
+    },
+    "serviceBusQueueName": {
+      "type": "String"
+    },
     "accountType": {
       "type": "String"
     },
@@ -172,6 +178,39 @@
         },
         "defaultEncryptionScope": "$account-encryption-key",
         "denyEncryptionScopeOverride": false
+      }
+    },
+    {
+      "type": "Microsoft.ServiceBus/namespaces",
+      "apiVersion": "2021-06-01-preview",
+      "name": "[parameters('serviceBusName')]",
+      "location": "East US",
+      "sku": {
+        "name": "Standard",
+        "tier": "Standard"
+      },
+      "kind": "Messaging",
+      "properties": {
+        "zoneRedundant": false
+      }
+    },
+    {
+      "type": "Microsoft.ServiceBus/namespaces/queues",
+      "apiVersion": "2021-06-01-preview",
+      "name": "[concat(parameters('serviceBusName'),'/', parameters('serviceBusQueueName'))]",
+      "dependsOn": [
+        "[resourceId('Microsoft.ServiceBus/namespaces', parameters('serviceBusName'))]"
+      ],
+      "properties": {
+        "lockDuration": "PT1M",
+        "maxSizeInMegabytes": 1024,
+        "requiresDuplicateDetection": false,
+        "requiresSession": false,
+        "defaultMessageTimeToLive": "P14D",
+        "deadLetteringOnMessageExpiration": false,
+        "duplicateDetectionHistoryTimeWindow": "PT10M",
+        "maxDeliveryCount": 10,
+        "enableBatchedOperations": true
       }
     }
   ],
