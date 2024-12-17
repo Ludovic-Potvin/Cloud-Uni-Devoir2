@@ -45,5 +45,5 @@ stages:
         templateLocation: 'Linked artifact'
         csmFile: '$(Build.SourcesDirectory)/$(AzureAppInfrastructure)/azuredeploy.json'
         csmParametersFile: '$(Build.SourcesDirectory)/$(AzureAppInfrastructure)/azuredeploy.parameters.json'
-        overrideParameters: '-name $(AzureFunctionAppName) -resourceGroup $(resourceGroupName)'
+        overrideParameters: ''
         deploymentMode: 'Incremental'
