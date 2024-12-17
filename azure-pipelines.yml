@@ -52,7 +52,6 @@ stages:
         
     - script: |
         echo ##vso[task.setvariable variable=BlobString;isOutput=true;isSecure=true]$(Deployment1.blobstoragestring.value)
-        echo $(Deployment1.blobstoragestring.value)
       name: AssignKey
 
 - stage: Function
@@ -90,10 +89,6 @@ stages:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)'
         ArtifactName: 'drop'
         publishLocation: 'Container'
-
-- script: |
-      echo $[ stageDependencies.Infra.Deploy.outputs['AssignKey.BlobString'] ]
-    name: Debug
 
   - job: FunctionDeploy
     displayName: Function Deployment
