@@ -316,9 +316,9 @@
       "dependsOn": [],
       "properties": {
           "name": "[parameters('hostingPlanName')]",
-          "workerSize": "[parameters('workerSize')]",
-          "workerSizeId": "[parameters('workerSizeId')]",
-          "numberOfWorkers": "[parameters('numberOfWorkers')]"
+          "workerSize": "Small",
+          "workerSizeId": "0",
+          "numberOfWorkers": "1"
       },
       "sku": {
           "Tier": "Free",
