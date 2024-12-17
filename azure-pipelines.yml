@@ -4,37 +4,45 @@
 # https://aka.ms/yaml
 
 trigger:
-- main
+- master
 
-pool: "Azure Pipelines"
+pool: "default"
 
 variables:
-  - name: CloudInitContent
-
-  - name: AzureAppInfrastructure
-    value: 'AzureResourceGroup1/AzureResourceGroup1'
-
   - name: resourceGroupName
     value: 'Lupo'
-
   - name: rgLocation
     value: 'Canada Central'
-
+  - name: AzureAppInfrastructure
+    value: 'InfrastructureBlob'
   - name: AzureAppFunction
     value: 'AzureFunction/AzureFonction1'
-
+  - name: AzureBlob
+    value: 'blobfunctionlupo'
+  - name: AzureBlobContainerName
+    value: 'blob'
   - name: AzureFunctionAppName
     value: 'LupoFunctionApp'
+  - name: BlobString
+    value: 'assignedbyoutput'
+
+resources:
+  pipelines:
+    - pipeline: 'AzureFunctionApp'
+      source: 'AzureFunctionApp'
+      project: 'AzureFunctionApp'
+      trigger: true
 
 stages:
 - stage: Infra
   displayName: Infrastructure Deployment
   jobs:
-  - job: Infra
+  - job: Deploy
     displayName: Infrastructure Deployment
     steps:
     - task: AzureResourceManagerTemplateDeployment@3
       displayName: ARM Template Deployment
+      name: ARMdeploy
       inputs:
         deploymentScope: 'Resource Group'
         azureResourceManagerConnection: 'Azure subscription 1(f8ee07ed-b563-4b27-931f-56bdf1405242)'
@@ -45,9 +53,13 @@ stages:
         templateLocation: 'Linked artifact'
         csmFile: '$(Build.SourcesDirectory)/$(AzureAppInfrastructure)/azuredeploy.json'
         csmParametersFile: '$(Build.SourcesDirectory)/$(AzureAppInfrastructure)/azuredeploy.parameters.json'
-        overrideParameters: ''
+        overrideParameters: '-storageAccountName $(AzureBlob) -storageBlobContainerName $(AzureBlobContainerName)'
         deploymentMode: 'Incremental'
-
+        deploymentOutputs: 'Deployment1'
+        
+    - script: |
+        echo ##vso[task.setvariable variable=BlobString;isOutput=true;isSecure=true]$(Deployment1.blobstoragestring.value)
+      name: AssignKey
 
 - stage: Function
   displayName: Function Deployment
