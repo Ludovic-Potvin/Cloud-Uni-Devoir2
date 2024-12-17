@@ -5,6 +5,8 @@ VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "AzureResourceGroup1", "AzureResourceGroup1\AzureResourceGroup1.deployproj", "{3F70240A-6EE2-453E-84FA-633FF0930A33}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlobFunction", "..\AzureFunction1\BlobFunction\BlobFunction.csproj", "{A127267C-C79E-4FEB-827A-B2FB9DF710F3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{3F70240A-6EE2-453E-84FA-633FF0930A33}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3F70240A-6EE2-453E-84FA-633FF0930A33}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3F70240A-6EE2-453E-84FA-633FF0930A33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A127267C-C79E-4FEB-827A-B2FB9DF710F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A127267C-C79E-4FEB-827A-B2FB9DF710F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A127267C-C79E-4FEB-827A-B2FB9DF710F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A127267C-C79E-4FEB-827A-B2FB9DF710F3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
