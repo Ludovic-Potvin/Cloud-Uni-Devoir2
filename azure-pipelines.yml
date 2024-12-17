@@ -55,9 +55,9 @@ stages:
       name: AssignKey
 
     - script: |
-      echo "BlobStoragestring value: $(Deployment1.blobstoragestring.value)"
-    displayName: 'Log BlobStoragestring Value'
-    name: LogBlobStorageValue
+        echo "BlobStoragestring value: $(Deployment1.blobstoragestring.value)"
+      displayName: 'Log BlobStoragestring Value'
+      name: LogBlobStorageValue
 
 - stage: Function
   displayName: Function Deployment
