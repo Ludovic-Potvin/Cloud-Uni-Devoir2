@@ -18,7 +18,7 @@ namespace AzureFonction1
         public async Task Run([BlobTrigger("blobinput/{name}", Connection = "ConnexionString")] Stream stream, string name)
         {
             using var blobStreamReader = new StreamReader(stream); 
-            var content = await blobStreamReader.ReadToEndAsync();
+            var content = await blobStreamReader.ReadToEndAsync(); 
             _logger.LogInformation($"C# Blob trigger function Processed blob\n Name: {name} \n Data: {content}");
         }
     }
