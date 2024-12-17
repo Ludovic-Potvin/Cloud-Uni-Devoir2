@@ -321,8 +321,8 @@
           "numberOfWorkers": "[parameters('numberOfWorkers')]"
       },
       "sku": {
-          "Tier": "[parameters('sku')]",
-          "Name": "[parameters('skuCode')]"
+          "Tier": "Free",
+          "Name": "F1"
       }
   },
   {
