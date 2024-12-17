@@ -14,7 +14,7 @@ variables:
   - name: rgLocation
     value: 'Canada Central'
   - name: AzureAppInfrastructure
-    value: 'InfrastructureBlob'
+    value: 'AzureResourceGroup1/AzureResourceGroup1'
   - name: AzureAppFunction
     value: 'AzureFunction/AzureFonction1'
   - name: AzureBlob
