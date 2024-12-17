@@ -21,7 +21,7 @@ variables:
     value: 'Canada Central'
 
   - name: AzureAppFunction
-    value: 'Function'
+    value: 'AzureFunction/BlobFunction'
 
   - name: AzureFunctionAppName
     value: 'LupoFunctionApp'
@@ -47,3 +47,69 @@ stages:
         csmParametersFile: '$(Build.SourcesDirectory)/$(AzureAppInfrastructure)/azuredeploy.parameters.json'
         overrideParameters: ''
         deploymentMode: 'Incremental'
+
+
+- stage: Function
+  displayName: Function Deployment
+
+  jobs:
+  - job: FunctionBuild
+    displayName: Function Build
+
+    steps:
+    - task: DotNetCoreCLI@2
+      displayName: Restore Project
+      inputs:
+        command: 'restore'
+        projects: '$(Build.SourcesDirectory)/$(AzureAppFunction)/*.csproj'
+        
+    - task: DotNetCoreCLI@2
+      displayName: Build Azure Function
+      inputs:
+        command: 'build'
+        projects: '$(Build.SourcesDirectory)/$(AzureAppFunction)/*.csproj'
+        arguments: '--configuration Release --output $(Build.BinariesDirectory)'
+
+    - task: DotNetCoreCLI@2
+      displayName: Publish Azure Function
+      inputs:
+        command: 'publish'
+        projects: '$(Build.SourcesDirectory)/$(AzureAppFunction)/*.csproj'
+        arguments: '--configuration Release --output $(Build.ArtifactStagingDirectory)'
+        publishWebProjects: false
+        zipAfterPublish: true
+        modifyOutputPath: false
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
+
+  - job: FunctionDeploy
+    displayName: Function Deployment
+    dependsOn: FunctionBuild
+
+    variables: 
+      blobstring: $[ stageDependencies.Infra.Deploy.outputs['AssignKey.BlobString'] ]
+
+    steps:
+    - checkout: none
+    - task: DownloadBuildArtifacts@1
+      inputs:
+        buildType: 'current'
+        downloadType: 'single'
+        artifactName: 'drop'
+        downloadPath: '$(System.ArtifactsDirectory)'
+        cleanDestinationFolder: true
+
+    - task: AzureFunctionApp@2
+      inputs:
+        connectedServiceNameARM: 'Azure subscription 1(f8ee07ed-b563-4b27-931f-56bdf1405242)'
+        appType: 'functionApp'
+        appName: '$(AzureFunctionAppName)'
+        deployToSlotOrASE: true
+        resourceGroupName: '$(resourceGroupName)'
+        slotName: 'production'
+        package: '$(Build.ArtifactStagingDirectory)/**/*.zip'
+        deploymentMethod: 'runFromPackage'
+        appSettings: '-Blob_ConnectionString $(blobstring) -Blob_ConnectionString__blob "https://$(AzureBlob).blob.core.windows.net/"'

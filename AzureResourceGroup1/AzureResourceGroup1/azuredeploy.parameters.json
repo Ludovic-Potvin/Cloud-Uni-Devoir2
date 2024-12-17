@@ -17,12 +17,6 @@
     "serviceBusQueueName": {
       "value": "servicebuslupoqueue"
     },
-    "functionAppName": {
-      "value": "functionapplupoqueue"
-    },
-    "appServicePlanName": {
-      "value": "appservicelupoqueue"
-    },
     "hostingPlanName": {
       "value": "ASP-Lupo-ade8"
     },
