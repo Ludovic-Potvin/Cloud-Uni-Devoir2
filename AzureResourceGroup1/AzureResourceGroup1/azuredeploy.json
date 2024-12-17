@@ -230,11 +230,11 @@
       "apiVersion": "2021-02-01",
       "name": "[parameters('appServicePlanName')]",
       "location": "[parameters('location')]",
+      "sku": {
+        "Tier": "Dynamic",
+        "Name": "Y1"
+      },
       "properties": {
-        "sku": {
-          "Tier": "Dynamic",
-          "Name": "Y1"
-        },
         "reserved": true
       }
     },
