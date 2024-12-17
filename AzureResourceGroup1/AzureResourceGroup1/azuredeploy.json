@@ -212,7 +212,155 @@
         "maxDeliveryCount": 10,
         "enableBatchedOperations": true
       }
-    }
+    },
+    {
+      "apiVersion": "2022-03-01",
+      "name": "[parameters('name')]",
+      "type": "Microsoft.Web/sites",
+      "kind": "functionapp",
+      "location": "[parameters('location')]",
+      "tags": {
+          "hidden-link: /app-insights-resource-id": "/subscriptions/f8ee07ed-b563-4b27-931f-56bdf1405242/resourceGroups/Lupo/providers/Microsoft.Insights/components/FunctionAppLupo"
+      },
+      "dependsOn": [
+          "microsoft.insights/components/FunctionAppLupo",
+          "[concat('Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]"
+      ],
+      "properties": {
+          "name": "[parameters('name')]",
+          "siteConfig": {
+              "appSettings": [
+                  {
+                      "name": "FUNCTIONS_EXTENSION_VERSION",
+                      "value": "~4"
+                  },
+                  {
+                      "name": "FUNCTIONS_WORKER_RUNTIME",
+                      "value": "dotnet-isolated"
+                  },
+                  {
+                      "name": "WEBSITE_USE_PLACEHOLDER_DOTNETISOLATED",
+                      "value": "1"
+                  },
+                  {
+                      "name": "APPLICATIONINSIGHTS_CONNECTION_STRING",
+                      "value": "[reference('microsoft.insights/components/FunctionAppLupo', '2015-05-01').ConnectionString]"
+                  },
+                  {
+                      "name": "AzureWebJobsStorage",
+                      "value": "[concat('DefaultEndpointsProtocol=https;AccountName=',parameters('storageAccountName'),';AccountKey=',listKeys(resourceId('f8ee07ed-b563-4b27-931f-56bdf1405242','Lupo','Microsoft.Storage/storageAccounts', parameters('storageAccountName')), '2019-06-01').keys[0].value,';EndpointSuffix=','core.windows.net')]"
+                  },
+                  {
+                      "name": "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING",
+                      "value": "[concat('DefaultEndpointsProtocol=https;AccountName=',parameters('storageAccountName'),';AccountKey=',listKeys(resourceId('f8ee07ed-b563-4b27-931f-56bdf1405242','Lupo','Microsoft.Storage/storageAccounts', parameters('storageAccountName')), '2019-06-01').keys[0].value,';EndpointSuffix=','core.windows.net')]"
+                  },
+                  {
+                      "name": "WEBSITE_CONTENTSHARE",
+                      "value": "[variables('contentShare')]"
+                  }
+              ],
+              "cors": {
+                  "allowedOrigins": [
+                      "https://portal.azure.com"
+                  ]
+              },
+              "use32BitWorkerProcess": "[parameters('use32BitWorkerProcess')]",
+              "ftpsState": "[parameters('ftpsState')]",
+              "netFrameworkVersion": "[parameters('netFrameworkVersion')]"
+          },
+          "clientAffinityEnabled": false,
+          "virtualNetworkSubnetId": null,
+          "functionsRuntimeAdminIsolationEnabled": false,
+          "publicNetworkAccess": "Enabled",
+          "httpsOnly": true,
+          "serverFarmId": "[concat('/subscriptions/', parameters('subscriptionId'),'/resourcegroups/', parameters('serverFarmResourceGroup'), '/providers/Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]"
+      },
+      "resources": [
+          {
+              "type": "Microsoft.Web/sites/basicPublishingCredentialsPolicies",
+              "apiVersion": "2022-09-01",
+              "name": "[concat(parameters('name'), '/scm')]",
+              "properties": {
+                  "allow": false
+              },
+              "dependsOn": [
+                  "[resourceId('Microsoft.Web/Sites', parameters('name'))]"
+              ]
+          },
+          {
+              "type": "Microsoft.Web/sites/basicPublishingCredentialsPolicies",
+              "apiVersion": "2022-09-01",
+              "name": "[concat(parameters('name'), '/ftp')]",
+              "properties": {
+                  "allow": false
+              },
+              "dependsOn": [
+                  "[resourceId('Microsoft.Web/Sites', parameters('name'))]"
+              ]
+          }
+      ]
+  },
+  {
+      "apiVersion": "2018-11-01",
+      "name": "[parameters('hostingPlanName')]",
+      "type": "Microsoft.Web/serverfarms",
+      "location": "[parameters('location')]",
+      "kind": "",
+      "tags": null,
+      "dependsOn": [],
+      "properties": {
+          "name": "[parameters('hostingPlanName')]",
+          "workerSize": "[parameters('workerSize')]",
+          "workerSizeId": "[parameters('workerSizeId')]",
+          "numberOfWorkers": "[parameters('numberOfWorkers')]"
+      },
+      "sku": {
+          "Tier": "[parameters('sku')]",
+          "Name": "[parameters('skuCode')]"
+      }
+  },
+  {
+      "apiVersion": "2020-02-02-preview",
+      "name": "FunctionAppLupo",
+      "type": "microsoft.insights/components",
+      "location": "canadacentral",
+      "tags": null,
+      "dependsOn": [
+          "newWorkspaceTemplate"
+      ],
+      "properties": {
+          "ApplicationId": "[parameters('name')]",
+          "Request_Source": "IbizaWebAppExtensionCreate",
+          "Flow_Type": "Redfield",
+          "Application_Type": "web",
+          "WorkspaceResourceId": "/subscriptions/f8ee07ed-b563-4b27-931f-56bdf1405242/resourceGroups/DefaultResourceGroup-CCAN/providers/Microsoft.OperationalInsights/workspaces/DefaultWorkspace-f8ee07ed-b563-4b27-931f-56bdf1405242-CCAN"
+      }
+  },
+  {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2021-04-01",
+      "name": "newWorkspaceTemplate",
+      "resourceGroup": "DefaultResourceGroup-CCAN",
+      "subscriptionId": "[parameters('subscriptionId')]",
+      "properties": {
+          "mode": "Incremental",
+          "template": {
+              "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+              "contentVersion": "1.0.0.0",
+              "parameters": {},
+              "variables": {},
+              "resources": [
+                  {
+                      "apiVersion": "2020-08-01",
+                      "name": "DefaultWorkspace-f8ee07ed-b563-4b27-931f-56bdf1405242-CCAN",
+                      "type": "Microsoft.OperationalInsights/workspaces",
+                      "location": "canadacentral",
+                      "properties": {}
+                  }
+              ]
+          }
+      }
+  }
   ],
   "outputs": {
     "blobstoragekey": {
