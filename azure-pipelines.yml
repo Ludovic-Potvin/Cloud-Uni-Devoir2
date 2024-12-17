@@ -91,6 +91,10 @@ stages:
         ArtifactName: 'drop'
         publishLocation: 'Container'
 
+- script: |
+      echo $[ stageDependencies.Infra.Deploy.outputs['AssignKey.BlobString'] ]
+    name: Debug
+
   - job: FunctionDeploy
     displayName: Function Deployment
     dependsOn: FunctionBuild
