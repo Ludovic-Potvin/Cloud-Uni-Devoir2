@@ -16,6 +16,9 @@
     },
     "serviceBusQueueName": {
       "value": "servicebuslupoqueue"
+    },    
+    "hostingPlanName": {
+      "value": "ASP-Lupo-ade8"
     },
     "accountType": {
       "value": "Standard_LRS"
