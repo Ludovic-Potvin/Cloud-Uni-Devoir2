@@ -17,6 +17,9 @@
     "serviceBusQueueName": {
       "type": "String"
     },
+    "hostingPlanName": {
+      "type": "string"
+    },
     "accountType": {
       "type": "String"
     },
