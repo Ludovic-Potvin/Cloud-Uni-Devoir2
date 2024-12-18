@@ -97,10 +97,6 @@ stages:
     variables: 
       blobstring: $[ stageDependencies.Infra.Deploy.outputs['AssignKey.BlobString'] ]
 
-    - script: |
-        echo "BlobString: $(blobstring)"
-      displayName: 'Debug blobstring value'
-
     steps:
     - checkout: none
     - task: DownloadBuildArtifacts@1
@@ -110,6 +106,10 @@ stages:
         artifactName: 'drop'
         downloadPath: '$(System.ArtifactsDirectory)'
         cleanDestinationFolder: true
+
+    - script: |
+        echo "BlobString: $(blobstring)"
+      displayName: 'Debug blobstring value'
 
     - task: AzureFunctionApp@2
       inputs:
