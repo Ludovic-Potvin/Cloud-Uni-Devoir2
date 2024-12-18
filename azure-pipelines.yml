@@ -20,7 +20,7 @@ variables:
   - name: AzureBlob
     value: 'blobfunctionlupo'
   - name: AzureBlobContainerName
-    value: 'blob'
+    value: 'blobinput'
   - name: AzureFunctionAppName
     value: 'LupoFunctionApp'
   - name: BlobString
@@ -51,8 +51,13 @@ stages:
         deploymentOutputs: 'Deployment1'
         
     - script: |
-        echo ##vso[task.setvariable variable=BlobString;isOutput=true;isSecure=false]$(Deployment1.blobstoragestring.value)
+        echo ##vso[task.setvariable variable=BlobString;isOutput=true;isSecure=true]$(Deployment1.blobstoragestring.value)
       name: AssignKey
+
+    - script: |
+        echo "ARM Template Outputs: $(ARMdeploy.outputs)"
+      displayName: 'Log ARM Template Outputs'
+
 
 - stage: Function
   displayName: Function Deployment
@@ -106,11 +111,6 @@ stages:
         artifactName: 'drop'
         downloadPath: '$(System.ArtifactsDirectory)'
         cleanDestinationFolder: true
-
-    - script: |
-        echo "BlobString: $(blobstring)"
-        echo "BlobString": $(BlobString)
-      displayName: 'Debug blobstring value'
 
     - task: AzureFunctionApp@2
       inputs:
