@@ -17,7 +17,7 @@ namespace AzureFonction1
 
         [Function(nameof(Function1))]
         public async Task Run(
-        [QueueTrigger("myqueue-items", Connection = "ConnexionString")] QueueMessage message)
+        [QueueTrigger("myqueue-items", Connection = "DefaultEndpointsProtocol=https;AccountName=blobfunctionlupo;AccountKey=ZteST9SfQfmSsKKAdB+ScC3THpllUtauNC1BaDz0O91QtKLsUYASF0xzWeE9jCb34I9dh5V8MSh++AStSg3Xzg==;EndpointSuffix=core.windows.net")] QueueMessage message)
         {
             // Récupérer le nom du fichier à partir du message
             string originalName = message.MessageText;
@@ -27,7 +27,7 @@ namespace AzureFonction1
 
             // Connexion au compte de stockage
             string connectionString = Environment.GetEnvironmentVariable("Blob_ConnectionString");
-            string inputContainerName = "blobinput";
+            string inputContainerName = "blobintput";
             string outputContainerName = "bloboutput";
 
             // Créer les clients de blob pour accéder aux conteneurs source et destination

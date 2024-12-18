@@ -17,7 +17,7 @@ namespace AzureFonction1
 
         [Function(nameof(Function))]
         public async Task Run(
-            [BlobTrigger("blobinput/{name}", Connection = "Blob_ConnectionString")] Stream stream,
+            [BlobTrigger("blobintput/{name}", Connection = "DefaultEndpointsProtocol=https;AccountName=blobfunctionlupo;AccountKey=ZteST9SfQfmSsKKAdB+ScC3THpllUtauNC1BaDz0O91QtKLsUYASF0xzWeE9jCb34I9dh5V8MSh++AStSg3Xzg==;EndpointSuffix=core.windows.net")] Stream stream,
             string name)
         {
             // Lire le contenu du blob
@@ -27,7 +27,7 @@ namespace AzureFonction1
 
             // Envoyer le nom du fichier à la file d'attente
             string queueName = "myqueue-items";
-            string connectionString = Environment.GetEnvironmentVariable("Blob_ConnectionString");
+            string connectionString = "DefaultEndpointsProtocol=https;AccountName=blobfunctionlupo;AccountKey=ZteST9SfQfmSsKKAdB+ScC3THpllUtauNC1BaDz0O91QtKLsUYASF0xzWeE9jCb34I9dh5V8MSh++AStSg3Xzg==;EndpointSuffix=core.windows.net";
 
             QueueClient queueClient = new QueueClient(connectionString, queueName);
             await queueClient.CreateIfNotExistsAsync();
