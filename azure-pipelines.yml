@@ -109,6 +109,7 @@ stages:
 
     - script: |
         echo "BlobString: $(blobstring)"
+        echo "BlobString": $(BlobString)
       displayName: 'Debug blobstring value'
 
     - task: AzureFunctionApp@2
