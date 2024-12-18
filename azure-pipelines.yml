@@ -54,10 +54,6 @@ stages:
         echo ##vso[task.setvariable variable=BlobString;isOutput=true;isSecure=true]$(Deployment1.blobstoragestring.value)
       name: AssignKey
 
-    - script: |
-        echo "ARM Template Outputs: $(ARMdeploy.outputs)"
-      displayName: 'Log ARM Template Outputs'
-
 
 - stage: Function
   displayName: Function Deployment
