@@ -15,8 +15,10 @@ namespace AzureFonction1
         }
 
         [Function(nameof(Function1))]
-        public void Run([QueueTrigger("myqueue-items", Connection = "ConnexionString")] QueueMessage message)
+        public void Run(
+        [QueueTrigger("myqueue-items", Connection = "Blob_ConnectionString")] QueueMessage message)
         {
+            // Traiter le message
             _logger.LogInformation($"C# Queue trigger function processed: {message.MessageText}");
         }
     }
