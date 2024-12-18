@@ -97,6 +97,10 @@ stages:
     variables: 
       blobstring: $[ stageDependencies.Infra.Deploy.outputs['AssignKey.BlobString'] ]
 
+    - script: |
+        echo "BlobString: $(blobstring)"
+      displayName: 'Debug blobstring value'
+
     steps:
     - checkout: none
     - task: DownloadBuildArtifacts@1
@@ -117,4 +121,4 @@ stages:
         slotName: 'production'
         package: '$(Build.ArtifactStagingDirectory)/**/*.zip'
         deploymentMethod: 'runFromPackage'
-        appSettings: '-Blob_ConnectionString $[ stageDependencies.Infra.Deploy.outputs['AssignKey.BlobString'] ] -Blob_ConnectionString__blob "https://$(AzureBlob).blob.core.windows.net/"'
+        appSettings: '-Blob_ConnectionString $(blobstring) -Blob_ConnectionString__blob "https://$(AzureBlob).blob.core.windows.net/"'
