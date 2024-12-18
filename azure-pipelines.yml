@@ -20,7 +20,7 @@ variables:
   - name: AzureBlob
     value: 'blobfunctionlupo'
   - name: AzureBlobContainerName
-    value: 'blobinput'
+    value: 'blob'
   - name: AzureFunctionAppName
     value: 'LupoFunctionApp'
   - name: BlobString
