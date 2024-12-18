@@ -117,4 +117,4 @@ stages:
         slotName: 'production'
         package: '$(Build.ArtifactStagingDirectory)/**/*.zip'
         deploymentMethod: 'runFromPackage'
-        appSettings: '-Blob_ConnectionString $(blobstring) -Blob_ConnectionString__blob "https://$(AzureBlob).blob.core.windows.net/"'
+        appSettings: '-Blob_ConnectionString $[ stageDependencies.Infra.Deploy.outputs['AssignKey.BlobString'] ] -Blob_ConnectionString__blob "https://$(AzureBlob).blob.core.windows.net/"'
